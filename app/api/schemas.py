@@ -14,15 +14,15 @@ class FailureMode(str, Enum):
 
 
 class Item(BaseModel):
-    sku: str
+    sku: str = Field(min_length=1)
     quantity: int = Field(ge=1)
 
 
 class CheckoutRequest(BaseModel):
-    customer_id: str
-    items: list[Item]
-    payment_method: str
-    total_amount: float = Field(gt=0)
+    customer_id: str = Field(min_length=1)
+    items: list[Item] = Field(min_length=1)
+    payment_method: str = Field(min_length=1)
+    total_amount: float = Field(gt=0, allow_inf_nan=False)
     inventory_mode: FailureMode = FailureMode.none
     payment_mode: FailureMode = FailureMode.none
 
